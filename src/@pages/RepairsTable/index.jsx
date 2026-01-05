@@ -3,8 +3,11 @@ import { useStore } from "../../@state/store";
 import { FadeLoader } from "react-spinners";
 import { FaPenAlt, FaEye } from "react-icons/fa";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function RepairsTable() {
+  const navigate = useNavigate();
+
   const { getAllRepairs } = useStore();
 
   const { isLoading, data } = useQuery({
@@ -67,7 +70,7 @@ export default function RepairsTable() {
         {/* Header with title and Add button */}
         <div className="flex items-center justify-between w-full px-6 py-4 border-b border-gray-200">
           <h2 className="lg:text-2xl md:text-lg text-base font-semibold text-gray-800">
-            Repairs Records
+            Repairs Table
           </h2>
 
           <div className="flex items-center">
@@ -78,7 +81,10 @@ export default function RepairsTable() {
               <i className="fa-solid fa-file-excel mr-1.5"></i> Generate Excel
               File
             </button>
-            <button className="px-3 py-1 lg:text-lg md:text-base text-sm font-medium text-white bg-indigo-500 rounded  transition-all ease-in-out duration-500 hover:bg-white hover:text-indigo-500 border border-indigo-500 cursor-pointer">
+            <button
+              onClick={() => navigate("/create/repair")}
+              className="px-3 py-1 lg:text-lg md:text-base text-sm font-medium text-white bg-indigo-500 rounded  transition-all ease-in-out duration-500 hover:bg-white hover:text-indigo-500 border border-indigo-500 cursor-pointer"
+            >
               <i className="fa-solid fa-plus mr-1.5"></i>Add Repair Record
             </button>
           </div>
