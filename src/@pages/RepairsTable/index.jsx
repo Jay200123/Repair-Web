@@ -115,7 +115,7 @@ export default function RepairsTable() {
                   {repairs.length === 0 ? (
                     <tr>
                       <td
-                        colSpan={13}
+                        colSpan={14}
                         className="px-5 py-6 text-center text-gray-500"
                       >
                         No repair records found.
