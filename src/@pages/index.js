@@ -1,3 +1,9 @@
 import RepairsTable from "./RepairsTable";
+import CreateRepair from "./CreateRepair";
+import Dashboard from "./Dashboard";
 
-export { RepairsTable };
+export { 
+    RepairsTable, 
+    CreateRepair, 
+    Dashboard
+};
