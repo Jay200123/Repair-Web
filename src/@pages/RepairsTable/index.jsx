@@ -8,61 +8,71 @@ import { useNavigate } from "react-router-dom";
 export default function RepairsTable() {
   const navigate = useNavigate();
 
+  const [limit] = useState(10);
+  const [offset, setOffset] = useState(0);
+
   const { getAllRepairs } = useStore();
 
-  const { isLoading, data } = useQuery({
-    queryKey: ["repairs"],
-    queryFn: getAllRepairs,
+  const { isLoading, data, isFetching } = useQuery({
+    queryKey: ["repairs", limit, offset],
+    queryFn: () => getAllRepairs(limit, offset),
   });
 
   const repairs = data?.details ?? [];
-
-  const [currentPage, setCurrentPage] = useState(1);
-  const rowsPerPage = 10; // You can adjust this
 
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
 
-  const totalPages = Math.ceil(repairs.length / rowsPerPage);
+  // Handlers v1
+  // const handlePrev = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
+  // const handleNext = () =>
+  //   setCurrentPage((prev) => Math.min(prev + 1, totalPages));
 
-  // Slice repairs to show only the current page
-  const paginatedRepairs = repairs.slice(
-    (currentPage - 1) * rowsPerPage,
-    currentPage * rowsPerPage
-  );
+  //Handlers v2
+  const handleNext = () => {
+    if (repairs?.length === limit) {
+      setOffset((prev) => prev + limit);
+    }
+  };
 
-  // Handlers
-  const handlePrev = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
-  const handleNext = () =>
-    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+  const handlePrev = () => {
+    setOffset((prev) => Math.max(prev - limit, 0));
+  };
 
   const handleExportExcel = () => {
-    const filtered = repairs.filter((r) => {
-      const created = new Date(r.createdAt);
+    // const filtered = repairs.filter((r) => {
+    //   const created = new Date(r.createdAt);
 
-      if (fromDate && created < new Date(fromDate)) return false;
-      if (toDate && created > new Date(toDate)) return false;
+    //   if (fromDate && created < new Date(fromDate)) return false;
+    //   if (toDate && created > new Date(toDate)) return false;
 
-      return true;
-    });
+    //   return true;
+    // });
 
     exportToExcel(filtered); // your SheetJS / ExcelJS function
     setIsExportModalOpen(false);
   };
 
   const exportToExcel = (rows) => {
-    const data = rows.map((r) => ({
-      RepairID: r.repair_id,
-      ItemSKU: r.item_sku,
-      ItemName: r.item_name,
-      Technician: r.technician_name,
-      Status: r.unit_status,
-      CreatedAt: new Date(r.createdAt).toLocaleDateString(),
-    }));
+    // const data = rows.map((r) => ({
+    //   RepairID: r.repair_id,
+    //   ItemSKU: r.item_sku,
+    //   ItemName: r.item_name,
+    //   Technician: r.technician_name,
+    //   Status: r.unit_status,
+    //   CreatedAt: new Date(r.createdAt).toLocaleDateString(),
+    // }));
+
+    console.log(rows);
 
     // SheetJS or ExcelJS logic here
   };
+
+  // pagination logic by default, 1st page is 1 then x 10 by what is the limit per row
+  // default index page = 0 x 10 = 0 // offset
+  // (2nd page) 1 x 10 = 10 // offset
+  // (3rd page) 2 x 10 = 20 // offset
 
   return (
     <div className="min-h-screen p-6 bg-gray-50">
@@ -128,7 +138,7 @@ export default function RepairsTable() {
                       </td>
                     </tr>
                   ) : (
-                    paginatedRepairs.map((row, index) => (
+                    repairs.map((row, index) => (
                       <tr
                         key={row._id || index}
                         className="hover:bg-gray-50 transition"
@@ -167,8 +177,8 @@ export default function RepairsTable() {
                           {row.technician_name || "—"}
                         </td>
                         <td className="px-5 py-4 flex items-center gap-2">
-                          <FaEye className="text-green-500 text-lg mr-1" />
-                          <FaPenAlt className="text-blue-500 text-lg mr-1" />
+                          <FaEye className="text-green-500 text-lg cursor-pointer mr-1" />
+                          <FaPenAlt className="text-blue-500 text-lg cursor-pointer mr-1" />
                         </td>
                       </tr>
                     ))
@@ -180,21 +190,26 @@ export default function RepairsTable() {
             <div className="flex justify-between items-center mt-4 px-4 py-2">
               <button
                 onClick={handlePrev}
-                disabled={currentPage === 1}
+                disabled={offset === 0}
                 className="px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 disabled:opacity-50"
               >
                 Previous
               </button>
+
               <span className="text-sm text-gray-600">
-                Page {currentPage} of {totalPages}
+                Page {offset / limit + 1}
               </span>
               <button
                 onClick={handleNext}
-                disabled={currentPage === totalPages}
+                disabled={repairs?.length < limit}
                 className="px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 disabled:opacity-50"
               >
                 Next
               </button>
+
+              {isFetching && (
+                <span className="text-sm text-gray-400 ml-2">Loading…</span>
+              )}
             </div>
 
             {isExportModalOpen && (
