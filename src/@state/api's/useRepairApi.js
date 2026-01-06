@@ -1,8 +1,13 @@
 import { basicApi } from "@axios";
 
 export const useRepairStore = (_set) => ({
-  getAllRepairs: async () => {
-    const result = await basicApi.get("/repairs");
+  getAllRepairs: async (limit, offset) => {
+    const result = await basicApi.get("/repairs", {
+      params: {
+        limit: limit,
+        offset: offset,
+      },
+    });
 
     return result?.data;
   },
