@@ -12,7 +12,15 @@ const Router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
       <Route element={<MainLayout />}>
-        <Route index element={<Dashboard />} />
+        <Route
+          index
+          path="/dashboard"
+          element={
+            <MotionWrapper>
+              <Dashboard />
+            </MotionWrapper>
+          }
+        />
 
         {/* Repairs Table */}
         <Route
