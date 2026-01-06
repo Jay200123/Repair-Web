@@ -1,5 +1,6 @@
 import NavLogo from "@assets/Nav-logo.png";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ export default function Navbar() {
 
         <div className="h-full w-[25%] flex items-center">
           <ul className="flex w-full justify-between font-medium">
-            <li className="lg:text-base cursor-pointer lg:p-2 rounded-md transition-all ease-in-out duration-500 hover:bg-white hover:text-[#63C6B5]">
+            <li onClick={()=> navigate("/dashboard")} className="lg:text-base cursor-pointer lg:p-2 rounded-md transition-all ease-in-out duration-500 hover:bg-white hover:text-[#63C6B5]">
               <i className="fa-solid fa-chart-area mr-1"></i>Dashboard
             </li>
             <li
@@ -29,10 +30,16 @@ export default function Navbar() {
             >
               <i className="fa-solid fa-wrench mr-1"></i>Repairs
             </li>
-            <li className="lg:text-base cursor-pointer lg:p-2 rounded-md transition-all ease-in-out duration-500 hover:bg-white hover:text-[#63C6B5]">
+            <li
+              onClick={() => toast.error("Feature on progress...")}
+              className="lg:text-base cursor-pointer lg:p-2 rounded-md transition-all ease-in-out duration-500 hover:bg-white hover:text-[#63C6B5]"
+            >
               <i className="fa-solid fa-box mr-1"></i>Units
             </li>
-            <li className="lg:text-base cursor-pointer lg:p-2 rounded-md transition-all ease-in-out duration-500 hover:bg-white hover:text-[#63C6B5]">
+            <li
+              onClick={() => toast.error("Feature on progress...")}
+              className="lg:text-base cursor-pointer lg:p-2 rounded-md transition-all ease-in-out duration-500 hover:bg-white hover:text-[#63C6B5]"
+            >
               <i className="fa-solid fa-user mr-1"></i>Technicians
             </li>
           </ul>
