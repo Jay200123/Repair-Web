@@ -13,6 +13,45 @@ export default function CreateRepair() {
 
             {/* Grid container for two inputs per row */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="flex flex-col">
+                <label htmlFor="item_sku">Unit SKU</label>
+                <div className="relative">
+                  <i className="fa-solid fa-clipboard-list absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                  <select
+                    id="item_sku"
+                    name="item_sku"
+                    className="p-1.5 border border-gray-400 w-full rounded-md pl-10 pr-3 focus:outline-none focus:border-[#63C6B5]"
+                    defaultValue=""
+                  >
+                    <option value="" disabled>
+                      SELECT UNIT SKU
+                    </option>
+                    <option value="CLASS-B">WANBO</option>
+                    <option value="CLASS-C">DREAME </option>
+                    <option value="CLASS-D">UWANT</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Unit Category */}
+              <div className="flex flex-col">
+                <label htmlFor="item_name">Unit Name</label>
+                <div className="relative">
+                  <i className="fa-solid fa-box-archive absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                  <select
+                    id="item_name"
+                    name="item_name"
+                    className="p-1.5 border border-gray-400 w-full rounded-md pl-10 pr-3 focus:outline-none focus:border-[#63C6B5]"
+                    defaultValue=""
+                  >
+                    <option value="" disabled>
+                      SELECT UNIT
+                    </option>
+                    <option value="CUSTOMER_UNIT">DALI 1</option>
+                    <option value="DEFECTIVE_UNIT">DALI 2</option>
+                  </select>
+                </div>
+              </div>
               {/* Serial Number */}
               <div className="flex flex-col">
                 <label htmlFor="serial_number">Serial Number</label>
