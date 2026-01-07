@@ -66,7 +66,7 @@ export default function RepairsTable() {
 
     // 2. Generate headers dynamically from first object keys
     const columns = Object.keys(units_repaired[0]).map((key) => ({
-      header: key.charAt(0).toUpperCase() + key.slice(1),
+      header: key.toUpperCase(),
       key: key,
       width: 20,
     }));
@@ -84,7 +84,7 @@ export default function RepairsTable() {
     worksheet.getRow(1).fill = {
       type: "pattern",
       pattern: "solid",
-      fgColor: { argb: "FFB6C1" }, // light pink
+      fgColor: { argb: "CCCCCCC" },
     };
 
     // 5. Generate buffer and save
