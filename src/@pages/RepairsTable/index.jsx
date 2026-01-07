@@ -43,8 +43,6 @@ export default function RepairsTable() {
 
   const units_repaired = repairsData?.details || [];
 
-  console.log(repairsData?.details);
-
   //Handlers v2
   const handleNext = () => {
     if (repairs?.length === limit) {
@@ -214,7 +212,7 @@ export default function RepairsTable() {
               <button
                 onClick={handlePrev}
                 disabled={offset === 0}
-                className="px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 disabled:opacity-50"
+                className="px-3 py-1 cursor-pointer bg-gray-200 text-gray-700 rounded hover:bg-gray-300 disabled:opacity-50"
               >
                 Previous
               </button>
@@ -225,7 +223,7 @@ export default function RepairsTable() {
               <button
                 onClick={handleNext}
                 disabled={repairs?.length < limit}
-                className="px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 disabled:opacity-50"
+                className="px-3 py-1 cursor-pointer bg-gray-200 text-gray-700 rounded hover:bg-gray-300 disabled:opacity-50"
               >
                 Next
               </button>
