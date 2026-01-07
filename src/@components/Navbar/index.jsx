@@ -7,12 +7,12 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="lg:w-full lg:h-15 bg-[#63C6B5] flex items-center justify-between shadow lg:p-1.5 rounded-md text-white">
+      <nav className="lg:w-full lg:h-16 bg-[#63C6B5] flex items-center justify-between shadow lg:p-1.5 rounded-md text-white">
         <div className="w-1/4 h-full flex items-center">
-          <div>
+          <div className="px-1 py-1 overflow-hidden">
             <img
               src={NavLogo}
-              className="h-14 w-14 lg:mr-1.5"
+              className="h-20 w-20"
               alt="Anymall.PH"
             />
           </div>
