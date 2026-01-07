@@ -4,6 +4,8 @@ import { FadeLoader } from "react-spinners";
 import { FaPenAlt, FaEye } from "react-icons/fa";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ExcelJS from "exceljs";
+import { saveAs } from "file-saver";
 
 export default function RepairsTable() {
   const navigate = useNavigate();
@@ -11,11 +13,16 @@ export default function RepairsTable() {
   const [limit] = useState(10);
   const [offset, setOffset] = useState(0);
 
-  const { getAllRepairs } = useStore();
+  const { getAllRepairs, getRepairsByDateRepaired } = useStore();
 
   const { isLoading, data, isFetching } = useQuery({
     queryKey: ["repairs", limit, offset],
     queryFn: () => getAllRepairs(limit, offset),
+    refetchOnMount: false,
+    refetchInterval: false,
+    refetchOnWindowFocus: false,
+    refetchIntervalInBackground: false,
+    refetchOnReconnect: false,
   });
 
   const repairs = data?.details ?? [];
@@ -24,10 +31,19 @@ export default function RepairsTable() {
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
 
-  // Handlers v1
-  // const handlePrev = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
-  // const handleNext = () =>
-  //   setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+  const { data: repairsData } = useQuery({
+    queryKey: ["repaired_units", fromDate, toDate],
+    queryFn: () => getRepairsByDateRepaired(fromDate, toDate),
+    refetchOnMount: false,
+    refetchInterval: false,
+    refetchOnWindowFocus: false,
+    refetchIntervalInBackground: false,
+    refetchOnReconnect: false,
+  });
+
+  const units_repaired = repairsData?.details || [];
+
+  console.log(repairsData?.details);
 
   //Handlers v2
   const handleNext = () => {
@@ -40,39 +56,46 @@ export default function RepairsTable() {
     setOffset((prev) => Math.max(prev - limit, 0));
   };
 
-  const handleExportExcel = () => {
-    // const filtered = repairs.filter((r) => {
-    //   const created = new Date(r.createdAt);
+  const handleExportExcel = async () => {
+    if (!units_repaired || units_repaired.length === 0) {
+      alert("No data available to export.");
+      return;
+    }
 
-    //   if (fromDate && created < new Date(fromDate)) return false;
-    //   if (toDate && created > new Date(toDate)) return false;
+    // 1. Create workbook and worksheet
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet("Repaired Units");
 
-    //   return true;
-    // });
+    // 2. Generate headers dynamically from first object keys
+    const columns = Object.keys(units_repaired[0]).map((key) => ({
+      header: key.charAt(0).toUpperCase() + key.slice(1),
+      key: key,
+      width: 20,
+    }));
 
-    exportToExcel(filtered); // your SheetJS / ExcelJS function
+    worksheet.columns = columns;
+
+    // 3. Add data rows
+    units_repaired.forEach((item) => {
+      worksheet.addRow(item);
+    });
+
+    // 4. Style header row
+    worksheet.getRow(1).font = { bold: true };
+    worksheet.getRow(1).alignment = { horizontal: "center" };
+    worksheet.getRow(1).fill = {
+      type: "pattern",
+      pattern: "solid",
+      fgColor: { argb: "FFB6C1" }, // light pink
+    };
+
+    // 5. Generate buffer and save
+    const buffer = await workbook.xlsx.writeBuffer();
+    const blob = new Blob([buffer], { type: "application/octet-stream" });
+    saveAs(blob, `TECHNICIANS_REPORTS_${fromDate}_to_${toDate}.xlsx`);
+
     setIsExportModalOpen(false);
   };
-
-  const exportToExcel = (rows) => {
-    // const data = rows.map((r) => ({
-    //   RepairID: r.repair_id,
-    //   ItemSKU: r.item_sku,
-    //   ItemName: r.item_name,
-    //   Technician: r.technician_name,
-    //   Status: r.unit_status,
-    //   CreatedAt: new Date(r.createdAt).toLocaleDateString(),
-    // }));
-
-    console.log(rows);
-
-    // SheetJS or ExcelJS logic here
-  };
-
-  // pagination logic by default, 1st page is 1 then x 10 by what is the limit per row
-  // default index page = 0 x 10 = 0 // offset
-  // (2nd page) 1 x 10 = 10 // offset
-  // (3rd page) 2 x 10 = 20 // offset
 
   return (
     <div className="min-h-screen p-6 bg-gray-50">
