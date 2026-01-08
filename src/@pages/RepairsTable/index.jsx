@@ -22,7 +22,6 @@ export default function RepairsTable() {
     refetchInterval: false,
     refetchOnWindowFocus: false,
     refetchIntervalInBackground: false,
-    refetchOnReconnect: false,
   });
 
   const repairs = data?.details ?? [];
@@ -132,8 +131,8 @@ export default function RepairsTable() {
                 <thead className="bg-[#63C6B5] text-white uppercase tracking-wide font-normal">
                   <tr>
                     <th className="px-5 py-4">ID</th>
-                    <th className="px-5 py-4">Item SKU</th>
-                    <th className="px-5 py-4">Item Name</th>
+                    <th className="px-5 py-4">Unit SKU</th>
+                    <th className="px-5 py-4">Unit Name</th>
                     <th className="px-5 py-4">Serial Number</th>
                     <th className="px-5 py-4 w-64">Actual Problem</th>
                     <th className="px-5 py-4 w-64">Unit Findings</th>
@@ -165,8 +164,8 @@ export default function RepairsTable() {
                         className="hover:bg-gray-50 transition"
                       >
                         <td className="px-5 py-4">{row.repair_id || "—"}</td>
-                        <td className="px-5 py-4">{row.item_sku || "—"}</td>
-                        <td className="px-5 py-4">{row.item_name || "—"}</td>
+                        <td className="px-5 py-4">{row.unit_sku || "—"}</td>
+                        <td className="px-5 py-4">{row.unit_name || "—"}</td>
                         <td className="px-5 py-4">
                           {row.serial_number || "—"}
                         </td>
