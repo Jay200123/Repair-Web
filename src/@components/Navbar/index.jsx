@@ -21,7 +21,7 @@ export default function Navbar() {
 
         <div className="h-full w-[25%] flex items-center">
           <ul className="flex w-full justify-between font-medium">
-            <li onClick={()=> navigate("/dashboard")} className="lg:text-base cursor-pointer lg:p-2 rounded-md transition-all ease-in-out duration-500 hover:bg-white hover:text-[#63C6B5]">
+            <li className="lg:text-base cursor-pointer lg:p-2 rounded-md transition-all ease-in-out duration-500 hover:bg-white hover:text-[#63C6B5]">
               <i className="fa-solid fa-chart-area mr-1"></i>Dashboard
             </li>
             <li
