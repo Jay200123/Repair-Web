@@ -1,11 +1,25 @@
+import { basicApi } from "@axios";
+
 export const useUnitStore = (_set) => ({
-  getAllUnits: async () => {},
+  getAllUnits: async () => {
+    const results = await basicApi.get("/units");
 
-  getUnitById: async () => {},
+    return results.data;
+  },
 
-  createUnit: async () => {},
+  getUnitsBySKU: async (unit_sku) => {
+    const results = await basicApi.get("/units/sku", {
+      params: {
+        unit_sku: unit_sku,
+      },
+    });
 
-  updateUnit: async () => {},
+    return results.data;
+  },
 
-  deleteUnit: async () => {},
+  getSKU: async () => {
+    const results = await basicApi.get("/sku");
+
+    return results.data;
+  },
 });
