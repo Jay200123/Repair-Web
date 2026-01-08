@@ -14,7 +14,6 @@ const Router = createBrowserRouter(
       <Route element={<MainLayout />}>
         <Route
           index
-          path="/dashboard"
           element={
             <MotionWrapper>
               <Dashboard />
