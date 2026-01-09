@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { useRepairStore } from "./api's/useRepairStore";
 import { useUnitStore } from "./api's/useUnitStore";
+import { useTechnicianStore } from "./api's/useTechnicianStore";
 
 export const useStore = create()(
   persist(
@@ -13,6 +14,7 @@ export const useStore = create()(
       //ex - ...useAuthStore(...a)
       ...useRepairStore(...a),
       ...useUnitStore(...a),
+      ...useTechnicianStore(...a),
     }),
     {
       name: "storage",
