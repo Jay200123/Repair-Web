@@ -17,6 +17,7 @@ export default defineConfig({
       "@assets": "/src/assets",
       "@axios": "/src/@axios",
       "@utils": "/src/@utils",
+      "@validations": "/src/@validations",
     },
   },
 });
