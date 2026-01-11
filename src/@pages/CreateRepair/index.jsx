@@ -58,6 +58,7 @@ export default function CreateRepair() {
   const formik = useFormik({
     initialValues: {
       unit_id: 0,
+      complaint: "",
       serial_number: "",
       actual_problem: "",
       unit_findings: "",
@@ -67,7 +68,7 @@ export default function CreateRepair() {
       unit_status: "",
       unit_remarks: "",
       unit_category: "",
-      technician_id: 0,
+      technician_id: "",
     },
 
     validationSchema: createRepairsSchema,
@@ -80,6 +81,8 @@ export default function CreateRepair() {
       navigate("/repairs");
     },
   });
+
+  console.log(formik.values);
 
   return (
     <div className="min-h-screen flex justify-center items-center">
@@ -146,7 +149,7 @@ export default function CreateRepair() {
                   </select>
                 </div>
 
-                <div className="min-h-[1.25rem] mt-1.5">
+                <div className="min-h-5 mt-1.5">
                   {formik.touched.unit_id && formik.errors.unit_id && (
                     <motion.p
                       initial={{ scale: 0 }}
@@ -179,7 +182,7 @@ export default function CreateRepair() {
                   />
                 </div>
 
-                <div className="min-h-[1.25rem] mt-1.5">
+                <div className="min-h-5 mt-1.5">
                   {formik.touched.serial_number &&
                     formik.errors.serial_number && (
                       <motion.p
@@ -193,6 +196,39 @@ export default function CreateRepair() {
                         {formik.errors.serial_number}
                       </motion.p>
                     )}
+                </div>
+              </div>
+
+              {/* Complaint */}
+              <div className="flex flex-col">
+                <label htmlFor="complaint">User Complaint</label>
+                <div className="relative">
+                  <i className="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                  <input
+                    type="text"
+                    id="complaint"
+                    name="complaint"
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    value={formik.values.complaint}
+                    className="p-1.5 border border-gray-400 w-full rounded-md pl-10 pr-3 focus:outline-none focus:border-[#63C6B5]"
+                    placeholder="Document your inspection"
+                  />
+                </div>
+
+                <div className="min-h-5 mt-1.5">
+                  {formik.touched.complaint && formik.errors.complaint && (
+                    <motion.p
+                      initial={{ scale: 0 }}
+                      animate={{
+                        scale: 1,
+                        transition: { duration: 0.5 },
+                      }}
+                      className="text-sm text-red-500"
+                    >
+                      {formik.errors.complaint}
+                    </motion.p>
+                  )}
                 </div>
               </div>
 
@@ -213,7 +249,7 @@ export default function CreateRepair() {
                   />
                 </div>
 
-                <div className="min-h-[1.25rem] mt-1.5">
+                <div className="min-h-5 mt-1.5">
                   {formik.touched.actual_problem &&
                     formik.errors.actual_problem && (
                       <motion.p
@@ -247,7 +283,7 @@ export default function CreateRepair() {
                   />
                 </div>
 
-                <div className="min-h-[1.25rem] mt-1.5">
+                <div className="min-h-5 mt-1.5">
                   {formik.touched.unit_findings &&
                     formik.errors.unit_findings && (
                       <motion.p
@@ -281,7 +317,7 @@ export default function CreateRepair() {
                   />
                 </div>
 
-                <div className="min-h-[1.25rem] mt-1.5">
+                <div className="min-h-5 mt-1.5">
                   {formik.touched.work_done && formik.errors.work_done && (
                     <motion.p
                       initial={{ scale: 0 }}
@@ -292,39 +328,6 @@ export default function CreateRepair() {
                       className="text-sm text-red-500"
                     >
                       {formik.errors.work_done}
-                    </motion.p>
-                  )}
-                </div>
-              </div>
-
-              {/* Order ID*/}
-              <div className="flex flex-col">
-                <label htmlFor="order_id">Order ID</label>
-                <div className="relative">
-                  <i className="fa-solid fa-screwdriver-wrench absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                  <input
-                    type="text"
-                    id="order_id"
-                    name="order_id"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    value={formik.values.order_id}
-                    className="p-1.5 border border-gray-400 w-full rounded-md pl-10 pr-3 focus:outline-none focus:border-[#63C6B5]"
-                    placeholder="Summarize work completed"
-                  />
-                </div>
-
-                <div className="min-h-[1.25rem] mt-1.5">
-                  {formik.touched.order_id && formik.errors.order_id && (
-                    <motion.p
-                      initial={{ scale: 0 }}
-                      animate={{
-                        scale: 1,
-                        transition: { duration: 0.5 },
-                      }}
-                      className="text-sm text-red-500"
-                    >
-                      {formik.errors.order_id}
                     </motion.p>
                   )}
                 </div>
@@ -346,7 +349,7 @@ export default function CreateRepair() {
                   />
                 </div>
 
-                <div className="min-h-[1.25rem] mt-1.5">
+                <div className="min-h-5 mt-1.5">
                   {formik.touched.date_repaired &&
                     formik.errors.date_repaired && (
                       <motion.p
@@ -379,7 +382,7 @@ export default function CreateRepair() {
                   />
                 </div>
 
-                <div className="min-h-[1.25rem] mt-1.5">
+                <div className="min-h-5 mt-1.5">
                   {formik.touched.date_returned &&
                     formik.errors.date_returned && (
                       <motion.p
@@ -419,7 +422,7 @@ export default function CreateRepair() {
                   </select>
                 </div>
 
-                <div className="min-h-[1.25rem] mt-1.5">
+                <div className="min-h-5 mt-1.5">
                   {formik.touched.unit_status && formik.errors.unit_status && (
                     <motion.p
                       initial={{ scale: 0 }}
@@ -458,7 +461,7 @@ export default function CreateRepair() {
                   </select>
                 </div>
 
-                <div className="min-h-[1.25rem] mt-1.5">
+                <div className="min-h-5 mt-1.5">
                   {formik.touched.unit_remarks &&
                     formik.errors.unit_remarks && (
                       <motion.p
@@ -496,7 +499,7 @@ export default function CreateRepair() {
                   </select>
                 </div>
 
-                <div className="min-h-[1.25rem] mt-1.5">
+                <div className="min-h-5 mt-1.5">
                   {formik.touched.unit_category &&
                     formik.errors.unit_category && (
                       <motion.p
@@ -521,13 +524,13 @@ export default function CreateRepair() {
                     id="technician_id"
                     name="technician_id"
                     onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
+                    onChange={(e) => {
+                      formik.setFieldValue("technician_id", e.target.value);
+                    }}
                     value={formik.values.technician_id}
                     className="p-1.5 border border-gray-400 w-full rounded-md pl-10 pr-3 focus:outline-none focus:border-[#63C6B5]"
                   >
-                    <option value="" disabled>
-                      Select Technician
-                    </option>
+                    <option value="">Select Technician</option>
 
                     {technicians?.map((technician) => (
                       <option key={technician.id} value={technician.id}>
@@ -537,7 +540,7 @@ export default function CreateRepair() {
                   </select>
                 </div>
 
-                <div className="min-h-[1.25rem] mt-1.5">
+                <div className="min-h-5 mt-1.5">
                   {formik.touched.technician_id &&
                     formik.errors.technician_id && (
                       <motion.p
