@@ -6,7 +6,12 @@ import {
 } from "react-router-dom";
 import { MotionWrapper } from "@components";
 import { MainLayout } from "@layouts";
-import { RepairsTable, CreateRepair, Dashboard } from "@pages";
+import {
+  RepairsTable,
+  CreateRepair,
+  Dashboard,
+  GetRepairDetailsByID,
+} from "@pages";
 
 const Router = createBrowserRouter(
   createRoutesFromElements(
@@ -37,6 +42,16 @@ const Router = createBrowserRouter(
           element={
             <MotionWrapper>
               <CreateRepair />
+            </MotionWrapper>
+          }
+        />
+
+        {/* Repair Details */}
+        <Route
+          path="/repair/:id"
+          element={
+            <MotionWrapper>
+              <GetRepairDetailsByID />
             </MotionWrapper>
           }
         />
