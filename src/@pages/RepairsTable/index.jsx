@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ExcelJS from "exceljs";
 import { saveAs } from "file-saver";
+import { toast } from "react-toastify";
 
 export default function RepairsTable() {
   const navigate = useNavigate();
@@ -134,6 +135,7 @@ export default function RepairsTable() {
                     <th className="px-5 py-4">Unit SKU</th>
                     <th className="px-5 py-4">Unit Name</th>
                     <th className="px-5 py-4">Serial Number</th>
+                    <th className="px-5 py-4">Customer Complaint</th>
                     <th className="px-5 py-4 w-64">Actual Problem</th>
                     <th className="px-5 py-4 w-64">Unit Findings</th>
                     <th className="px-5 py-4 w-64">Work Done</th>
@@ -169,6 +171,7 @@ export default function RepairsTable() {
                         <td className="px-5 py-4">
                           {row.serial_number || "—"}
                         </td>
+                        <td className="px-5 py-4">{row.complaint || "—"}</td>
                         <td className="px-5 py-4 w-64">
                           {row.actual_problem || "—"}
                         </td>
@@ -197,8 +200,14 @@ export default function RepairsTable() {
                           {row.technician_name || "—"}
                         </td>
                         <td className="px-5 py-4 flex items-center gap-2">
-                          <FaEye className="text-green-500 text-lg cursor-pointer mr-1" />
-                          <FaPenAlt className="text-blue-500 text-lg cursor-pointer mr-1" />
+                          <FaEye
+                            onClick={() => toast.warning("Feature on progress")}
+                            className="text-green-500 text-lg cursor-pointer mr-1"
+                          />
+                          <FaPenAlt
+                            onClick={() => toast.warning("Feature on progress")}
+                            className="text-blue-500 text-lg cursor-pointer mr-1"
+                          />
                         </td>
                       </tr>
                     ))
